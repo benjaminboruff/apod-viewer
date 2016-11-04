@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APOD Viewer</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-orange.min.css">
+    <link rel="stylesheet" href="main.css">
+    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+</head>
+
+<body>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">APOD Viewer</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="https://apod.nasa.gov/apod/astropix.html" target="_blank">APOD at NASA</a>
+                    <a class="mdl-navigation__link" href="https://api.nasa.gov/index.html" target="_blank">NASA Open APIs</a>
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">APOD Viewer</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="https://apod.nasa.gov/apod/astropix.html" target="_blank">APOD at NASA</a>
+                <a class="mdl-navigation__link" href="https://api.nasa.gov/index.html" target="_blank">NASA Open APIs</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!-- Main content -->
+                <div class="mdl-grid">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                        <div class="mdl-tabs mdl-js-tabs">
+                            <div class="mdl-tabs__tab-bar">
+                                <a href="#image" class="mdl-tabs__tab">Image</a>
+                                <a href="#explanation" class="mdl-tabs__tab">explanation</a>
+                            </div>
+                            <div class="mdl-tabs__panel is-active" id="image">
+                                <div class="mdl-card" id="media-card">
+                                    <div class="mdl-card__title" id="title"></div>
+                                    <div class="mdl-card__media" id="media"><div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div></div>
+                                    <div class="mdl-card__supporting-text" id="support"></div>
+                                    <div class="mdl-card__actions mdl-card--border">
+                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pre-next-btn" id="prev">Previous</button>
+                                        <span id="apod-date"></span>
+                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pre-next-btn" id="next">Next</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="mdl-tabs__panel" id="explanation">
+                                <p>Explanation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="mdl-mini-footer">
+            <div class="mdl-mini-footer__left-section">
+                <div class="mdl-logo">Written and coded by <a href="http://boruff.me" target="_blank">Benjamin H Boruff</a> &copy;2016</div>
+                <ul class="mdl-mini-footer__link-list">
+                    <!--<li><a href="#">Help</a></li>-->
+                    <!--<li><a href="#">Privacy</a></li>-->
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-database.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+
+</body>
+
+</html>

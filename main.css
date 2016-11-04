@@ -1,0 +1,47 @@
+html,
+body {
+    font-family: "Roboto", "Arial", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+#media-card {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#title {
+    margin: 0 auto;
+}
+
+#apod-image {
+    width: 400px;
+    height: 400px;
+}
+
+#apod-date {
+    margin-left: 10px;
+}
+
+.pre-next-btn {
+    width: 100px;
+}
+
+#next {
+    margin-left: 10px;
+}
+
+/*.http-media {}*/
+
+.http-link {
+    color: white;
+}
+
+.mdl-spinner {
+    /*margin-left: 60px;*/
+    width: 370px;
+    height: 370px;
+}
