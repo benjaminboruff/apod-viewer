@@ -25,7 +25,7 @@ a {
 }
 
 #apod-date {
-    margin-left: 40px;
+    margin-left: 10px;
 }
 
 .pre-next-btn {
@@ -33,7 +33,7 @@ a {
 }
 
 #next {
-    margin-left: 50px;
+    margin-left: 10px;
 }
 
 /*.http-media {}*/
