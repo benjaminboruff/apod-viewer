@@ -11,6 +11,8 @@ a {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
+    width: 400px;
+    /*height: 400px;*/
 }
 
 #title {
@@ -23,7 +25,7 @@ a {
 }
 
 #apod-date {
-    margin-left: 10px;
+    margin-left: 40px;
 }
 
 .pre-next-btn {
@@ -31,7 +33,7 @@ a {
 }
 
 #next {
-    margin-left: 10px;
+    margin-left: 50px;
 }
 
 /*.http-media {}*/
