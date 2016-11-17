@@ -162,7 +162,7 @@ function initApp() {
             var keyRef = firebase.database().ref('/');
             keyRef.once('value').then(function(dataSnapshot) {
                 keyData = dataSnapshot.val().api_key;
-                ajaxSettings.url += keyData;
+                ajaxSettings.url += keyData + "&date=" + moment().format("YYYY-MM-DD");
                 // make ajax call to NASA APOD API
                 $.ajax(ajaxSettings);
                 //console.log(keyData);
