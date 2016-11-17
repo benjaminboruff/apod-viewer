@@ -7,6 +7,10 @@ a {
     text-decoration: none;
 }
 
+.mdl-card__supporting-text {
+    height: 30px;
+}
+
 #media-card {
     margin-top: 10px;
     margin-left: auto;
@@ -17,6 +21,7 @@ a {
 
 #title {
     margin: 0 auto;
+    height: 80px;
 }
 
 #apod-image {
