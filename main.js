@@ -9,9 +9,6 @@ var ajaxSettings = {
         apodData = result;
         //console.log(JSON.stringify(apodData));
         updateDOM(apodData);
-    },
-    error: function(error) {
-        console.log(JSON.stringify(error.message));
     }
 };
 
@@ -50,7 +47,13 @@ function next(e) {
     if (!$("#next").prop("disabled")) {
         var nextDate = moment(apodData.date).add(1, 'd');
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate.format("YYYY-MM-DD");
-        $.ajax(ajaxSettings);
+        $.ajax(ajaxSettings)
+            .fail(function (xhr){
+                console.log("ERROR: " + xhr.status + ". Skipping bad date.");
+                if (xhr.status === 500) {
+                    skipDate(nextDate, "forward");
+                }
+            });
     }
 }
 
@@ -61,6 +64,25 @@ function prev(e) {
     if (!$("#prev").prop("disabled")) {
         var prevDate = moment(apodData.date).subtract(1, 'd');
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate.format("YYYY-MM-DD");
+        $.ajax(ajaxSettings)
+            .fail(function(xhr){
+                console.log("ERROR: " + xhr.status + ". Skipping bad date.");
+                if (xhr.status === 500) {
+                    skipDate(prevDate, "backward");
+                }
+            });
+    }
+}
+
+// skip bad dates that produce error 500 Internal Server Error
+function skipDate(date, direction) {
+    if (direction === 'backward') {
+        var prevDate = date.subtract(1, 'd');
+        ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate.format("YYYY-MM-DD");
+        $.ajax(ajaxSettings);
+    } else if (direction === "forward") {
+        var nextDate = date.add(1, 'd');
+        ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate.format("YYYY-MM-DD");
         $.ajax(ajaxSettings);
     }
 }
