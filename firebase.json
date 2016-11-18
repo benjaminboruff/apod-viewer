@@ -8,6 +8,7 @@
       "firebase.json",
       "database.rules.json",
       "./.c9/",
+      "./src/",
       "**/node_modules/**"
     ]
   }
