@@ -144,7 +144,11 @@ function updateDOM(apodData) {
     // credit author if not public domain
     if (apodData.hasOwnProperty('copyright')) {
         $('#support').html("Image credit and copyright: " + apodData.copyright);
+    } 
+    else {
+        $('#support').html(" ");
     }
+    
     $('#apod-date').html(moment(apodData.date).format("L"));
     $('#explanation').html('<p>' + apodData.explanation + '</p>');
 }
