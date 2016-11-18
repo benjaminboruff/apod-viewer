@@ -4,7 +4,8 @@
   "description": "This is an MDL, Firebase app that uses NASA's APOD API",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "uglifyjs src/js/material.js src/js/moment-with-locales.js src/js/jquery.js src/js/firebase-app.js src/js/firebase-auth.js src/js/firebase-database.js src/js/main.js -c -o build/app.min.js"
   },
   "author": "Benjamin H Boruff",
   "license": "ISC",
