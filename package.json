@@ -5,15 +5,23 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "uglifyjs src/js/material.js src/js/moment-with-locales.js src/js/jquery.js src/js/firebase-app.js src/js/firebase-auth.js src/js/firebase-database.js src/js/main.js -c -o build/app.min.js"
+    "old": "uglifyjs src/js/material.js src/js/moment-with-locales.js src/js/jquery.js src/js/firebase-app.js src/js/firebase-auth.js src/js/firebase-database.js src/js/main.js -c -o build/app.min.js",
+    "dev": "rollup --config rollup.config.dev.js",
+    "build": "rollup --config rollup.config.build.js"
   },
   "author": "Benjamin H Boruff",
   "license": "ISC",
   "dependencies": {
     "firebase": "^3.6.1",
+    "jquery": "^3.1.1",
     "moment": "^2.16.0"
   },
   "devDependencies": {
-    "jquery": "^3.1.1"
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "rollup": "^0.36.3",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1"
   }
 }
