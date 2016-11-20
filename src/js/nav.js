@@ -6,7 +6,7 @@ import { updateDOM } from './dom';
 
 // disable buttons if next or prev date is beyond the current
 // date or before the APOD birthday.
-function checkDateRange(dateStr: string) {
+function checkDateRange(dateStr: string): void {
     var todayDate = moment();
     var apodStartDate = moment(startDate);
     var nextDate = moment(dateStr).add(1, 'd');
@@ -27,7 +27,7 @@ function checkDateRange(dateStr: string) {
 }
 
 // is it okay to go to next apod date?
-function nextOkay(dateStr: string) {
+function nextOkay(dateStr: string): boolean {
     var todayDate = moment();
     var nextMoment = moment(dateStr);
 
@@ -40,7 +40,7 @@ function nextOkay(dateStr: string) {
 }
 
 // is it okay to go to prev apod date?
-function prevOkay(dateStr: string) {
+function prevOkay(dateStr: string): boolean {
     var apodStartDate = moment(startDate);
     var prevMoment = moment(dateStr);
 
@@ -54,13 +54,13 @@ function prevOkay(dateStr: string) {
 
 // success function for ajax call to update apodDataStore
 // with new data and then update dom
-function updateDataStore(data: Object , apodDataStore: Object) {
+function updateDataStore(data: Object , apodDataStore: Object): void {
     Object.assign(apodDataStore, data);
     updateDOM(apodDataStore);
 }
 
 // go to the next date
-function next(apodDataStore: Object) {
+function next(apodDataStore: Object): void {
     //e.preventDefault();
     var nextDate = moment(apodDataStore.date).add(1, 'd').format("YYYY-MM-DD");
     //console.log("Next date is: " + nextDate);
@@ -82,7 +82,7 @@ function next(apodDataStore: Object) {
 }
 
 // go to the previous date
-function prev(apodDataStore: Object) {
+function prev(apodDataStore: Object): void {
     //e.preventDefault();
     var prevDate = moment(apodDataStore.date).subtract(1, 'd').format("YYYY-MM-DD");
     //console.log("Prev date is: " + prevDate);
@@ -104,7 +104,7 @@ function prev(apodDataStore: Object) {
 }
 
 // skip bad dates that produce error 500 Internal Server Error
-function skipDate(apodDataStore: Object, direction: string) {
+function skipDate(apodDataStore: Object, direction: string): void {
     if (direction === 'backward') {
         var prevDate = moment(apodDataStore.date).subtract(2, 'd').format("YYYY-MM-DD");
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate;

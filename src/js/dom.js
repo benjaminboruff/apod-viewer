@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { prev, next, checkDateRange } from './nav';
 
 // updateDOM inserts apodDataStore into the DOM
-function updateDOM(apodDataStore: Object) {
+function updateDOM(apodDataStore: Object): void {
     $('#spinner').addClass('is-active');
     checkDateRange(apodDataStore.date);
     var httpsStr: string = "https://" + apodDataStore.url.match(/[^http:\/\/].+/);
