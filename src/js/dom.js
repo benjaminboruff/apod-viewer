@@ -1,15 +1,16 @@
+// @flow
 import moment from 'moment';
 import $ from 'jquery';
 import { prev, next, checkDateRange } from './nav';
 
 // updateDOM inserts apodDataStore into the DOM
-function updateDOM(apodDataStore) {
+function updateDOM(apodDataStore: Object) {
     $('#spinner').addClass('is-active');
     checkDateRange(apodDataStore.date);
-    var httpsStr = "https://" + apodDataStore.url.match(/[^http:\/\/].+/);
+    var httpsStr: string = "https://" + apodDataStore.url.match(/[^http:\/\/].+/);
     // if there is a HD image available use that as anchor
     if (apodDataStore.hasOwnProperty('hdurl')) {
-        var httpsStrHD = "https://" + apodDataStore.hdurl.match(/[^http:\/\/].+/);
+        var httpsStrHD: string = "https://" + apodDataStore.hdurl.match(/[^http:\/\/].+/);
     }
     else {
         // otherwise use the standard one

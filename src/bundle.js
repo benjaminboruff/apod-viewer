@@ -5413,6 +5413,7 @@ var ajaxSettings = { "url": "https://api.nasa.gov/planetary/apod?api_key=" };
 var firebaseConfig = { "apiKey": "AIzaSyBcSUvpRjeWIpz3aOWegvo7ELchZRPRU7w", "authDomain": "apod-app.firebaseapp.com", "databaseURL": "https://apod-app.firebaseio.com", "storageBucket": "apod-app.appspot.com", "messagingSenderId": "235809363063" };
 var startDate = "1996-06-16";
 
+//      
 // updateDOM inserts apodDataStore into the DOM
 function updateDOM(apodDataStore) {
     jquery$1('#spinner').addClass('is-active');
@@ -5455,6 +5456,7 @@ function updateDOM(apodDataStore) {
     jquery$1('#explanation').html('<p>' + apodDataStore.explanation + '</p>');
 }
 
+//      
 // disable buttons if next or prev date is beyond the current
 // date or before the APOD birthday.
 function checkDateRange(dateStr) {
@@ -5563,6 +5565,7 @@ function skipDate(apodDataStore, direction) {
     }
 }
 
+//      
 var apodDataStore = {};
 //apodDataStore.date = `${startDate}`;
 //var apodStartDate = moment(startDate);

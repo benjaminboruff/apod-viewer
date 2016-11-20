@@ -1,3 +1,4 @@
+// @flow
 import './material';
 import moment from 'moment';
 import firebase from 'firebase';
@@ -6,7 +7,7 @@ import { ajaxSettings, firebaseConfig, startDate } from './config.json';
 import { next, prev, checkDateRange } from './nav';
 import { updateDOM } from './dom';
 
-var apodDataStore = {};
+var apodDataStore: Object = {};
 //apodDataStore.date = `${startDate}`;
 //var apodStartDate = moment(startDate);
 //var todayDate = moment();
