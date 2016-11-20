@@ -5499,18 +5499,23 @@ function prevOkay(dateStr) {
     }
 }
 
+// success function for ajax call to update apodDataStore
+// with new data and then update dom
+function updateDataStore(data, apodDataStore) {
+    Object.assign(apodDataStore, data);
+    updateDOM(apodDataStore);
+}
+
 // go to the next date
 function next(apodDataStore) {
     //e.preventDefault();
     var nextDate = moment(apodDataStore.date).add(1, 'd').format("YYYY-MM-DD");
-    console.log("Next date is: " + nextDate);
+    //console.log("Next date is: " + nextDate);
     if (nextOkay(nextDate)) {
         //if (!$("#next").prop("disabled")) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate;
         jquery$1.ajax(ajaxSettings).done(function (data) {
-            Object.assign(apodDataStore, data);
-            //console.log(JSON.stringify(apodData));
-            updateDOM(apodDataStore);
+            updateDataStore(data, apodDataStore);
         }).fail(function (xhr) {
             console.log("ERROR: " + xhr.status + ". Skipping bad date.");
             if (xhr.status === 500) {
@@ -5525,14 +5530,12 @@ function next(apodDataStore) {
 function prev(apodDataStore) {
     //e.preventDefault();
     var prevDate = moment(apodDataStore.date).subtract(1, 'd').format("YYYY-MM-DD");
-    console.log("Prev date is: " + prevDate);
+    //console.log("Prev date is: " + prevDate);
     if (prevOkay(prevDate)) {
         //if (!$("#prev").prop("disabled")) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate;
         jquery$1.ajax(ajaxSettings).done(function (data) {
-            Object.assign(apodDataStore, data);
-            //console.log(JSON.stringify(apodData));
-            updateDOM(apodDataStore);
+            updateDataStore(data, apodDataStore);
         }).fail(function (xhr) {
             console.log("ERROR: " + xhr.status + ". Skipping bad date.");
             if (xhr.status === 500) {
@@ -5549,17 +5552,13 @@ function skipDate(apodDataStore, direction) {
         var prevDate = moment(apodDataStore.date).subtract(2, 'd').format("YYYY-MM-DD");
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate;
         jquery$1.ajax(ajaxSettings).done(function (data) {
-            Object.assign(apodDataStore, data);
-            //console.log(JSON.stringify(apodData));
-            updateDOM(apodDataStore);
+            updateDataStore(data, apodDataStore);
         });
     } else if (direction === "forward") {
         var nextDate = moment(apodDataStore.date).add(2, 'd').format("YYYY-MM-DD");
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate;
         jquery$1.ajax(ajaxSettings).done(function (data) {
-            Object.assign(apodDataStore, data);
-            //console.log(JSON.stringify(apodData));
-            updateDOM(apodDataStore);
+            updateDataStore(data, apodDataStore);
         });
     }
 }

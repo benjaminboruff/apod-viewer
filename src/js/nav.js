@@ -51,19 +51,24 @@ function prevOkay(dateStr) {
     }
 }
 
+// success function for ajax call to update apodDataStore
+// with new data and then update dom
+function updateDataStore(data, apodDataStore) {
+    Object.assign(apodDataStore, data);
+    updateDOM(apodDataStore);
+}
+
 // go to the next date
 function next(apodDataStore) {
     //e.preventDefault();
     var nextDate = moment(apodDataStore.date).add(1, 'd').format("YYYY-MM-DD");
     //console.log("Next date is: " + nextDate);
-    if (nextOkay(nextDate)){
-    //if (!$("#next").prop("disabled")) {
+    if (nextOkay(nextDate)) {
+        //if (!$("#next").prop("disabled")) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate;
         $.ajax(ajaxSettings)
             .done(function(data) {
-                Object.assign(apodDataStore, data);
-                //console.log(JSON.stringify(apodData));
-                updateDOM(apodDataStore);
+                updateDataStore(data, apodDataStore);
             })
             .fail(function(xhr) {
                 console.log("ERROR: " + xhr.status + ". Skipping bad date.");
@@ -71,7 +76,7 @@ function next(apodDataStore) {
                     skipDate(apodDataStore, "forward");
                 }
             });
-    //}
+        //}
     }
 }
 
@@ -80,14 +85,12 @@ function prev(apodDataStore) {
     //e.preventDefault();
     var prevDate = moment(apodDataStore.date).subtract(1, 'd').format("YYYY-MM-DD");
     //console.log("Prev date is: " + prevDate);
-    if (prevOkay(prevDate)){
-    //if (!$("#prev").prop("disabled")) {
+    if (prevOkay(prevDate)) {
+        //if (!$("#prev").prop("disabled")) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate;
         $.ajax(ajaxSettings)
             .done(function(data) {
-                Object.assign(apodDataStore, data);
-                //console.log(JSON.stringify(apodData));
-                updateDOM(apodDataStore);
+                updateDataStore(data, apodDataStore);
             })
             .fail(function(xhr) {
                 console.log("ERROR: " + xhr.status + ". Skipping bad date.");
@@ -95,7 +98,7 @@ function prev(apodDataStore) {
                     skipDate(apodDataStore, "backward");
                 }
             });
-    //}
+        //}
     }
 }
 
@@ -106,9 +109,7 @@ function skipDate(apodDataStore, direction) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate;
         $.ajax(ajaxSettings)
             .done(function(data) {
-                Object.assign(apodDataStore, data);
-                //console.log(JSON.stringify(apodData));
-                updateDOM(apodDataStore);
+                updateDataStore(data, apodDataStore);
             });
     }
     else if (direction === "forward") {
@@ -116,11 +117,13 @@ function skipDate(apodDataStore, direction) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate;
         $.ajax(ajaxSettings)
             .done(function(data) {
-                Object.assign(apodDataStore, data);
-                //console.log(JSON.stringify(apodData));
-                updateDOM(apodDataStore);
+                updateDataStore(data, apodDataStore);
             });
     }
 }
 
-export { next, prev, checkDateRange };
+export {
+    next,
+    prev,
+    checkDateRange
+};
