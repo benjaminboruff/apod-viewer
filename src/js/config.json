@@ -1,0 +1,13 @@
+{
+    "ajaxSettings": {
+        "url": "https://api.nasa.gov/planetary/apod?api_key="
+    },
+    "firebaseConfig": {
+        "apiKey": "AIzaSyBcSUvpRjeWIpz3aOWegvo7ELchZRPRU7w",
+        "authDomain": "apod-app.firebaseapp.com",
+        "databaseURL": "https://apod-app.firebaseio.com",
+        "storageBucket": "apod-app.appspot.com",
+        "messagingSenderId": "235809363063"
+    },
+    "startDate" : "1996-06-16"
+}

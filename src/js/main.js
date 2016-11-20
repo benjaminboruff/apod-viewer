@@ -2,161 +2,40 @@ import './material';
 import moment from 'moment';
 import firebase from 'firebase';
 import $ from 'jquery';
+import { ajaxSettings, firebaseConfig, startDate } from './config.json';
+import { next, prev, checkDateRange } from './nav';
+import { updateDOM } from './dom';
 
-var apodData;
-var apodStartDate = moment("1996-06-16");
-var todayDate = moment();
+var apodDataStore = {};
+//apodDataStore.date = `${startDate}`;
+//var apodStartDate = moment(startDate);
+//var todayDate = moment();
 
-// ajax query object for APOD API
-var ajaxSettings = {
-    url: "https://api.nasa.gov/planetary/apod?api_key=",
-    success: function(result) {
-        apodData = result;
-        //console.log(JSON.stringify(apodData));
-        updateDOM(apodData);
-    }
-};
-
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyBcSUvpRjeWIpz3aOWegvo7ELchZRPRU7w",
-    authDomain: "apod-app.firebaseapp.com",
-    databaseURL: "https://apod-app.firebaseio.com",
-    storageBucket: "apod-app.appspot.com",
-    messagingSenderId: "235809363063"
-};
-firebase.initializeApp(config);
-
-// update ajaxSetting object's url to get previous day's data
-$('#prev').click(prev);
-
-// update ajaxSetting object's url to get previous day's data
-$('#next').click(next);
+firebase.initializeApp(firebaseConfig);
 
 // enable left and right arrow key use
 // like buttons
 $(document).keydown(function(e) {
     //console.log(e.keyCode);
     if (e.keyCode === 37) {
-        prev(e);
+        prev(apodDataStore);
     }
     else if (e.keyCode == 39) {
-        next(e);
+        next(apodDataStore);
     }
 });
 
-// go to the next date
-function next(e) {
+// update ajaxSetting object's url to get previous day's data
+$('#prev').click(function(e) {
     e.preventDefault();
-    checkDateRange();
-    if (!$("#next").prop("disabled")) {
-        var nextDate = moment(apodData.date).add(1, 'd');
-        ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate.format("YYYY-MM-DD");
-        $.ajax(ajaxSettings)
-            .fail(function (xhr){
-                console.log("ERROR: " + xhr.status + ". Skipping bad date.");
-                if (xhr.status === 500) {
-                    skipDate(nextDate, "forward");
-                }
-            });
-    }
-}
+    prev(apodDataStore);
+});
 
-// go to the previous date
-function prev(e) {
+// update ajaxSetting object's url to get previous day's data
+$('#next').click(function(e) {
     e.preventDefault();
-    checkDateRange();
-    if (!$("#prev").prop("disabled")) {
-        var prevDate = moment(apodData.date).subtract(1, 'd');
-        ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate.format("YYYY-MM-DD");
-        $.ajax(ajaxSettings)
-            .fail(function(xhr){
-                console.log("ERROR: " + xhr.status + ". Skipping bad date.");
-                if (xhr.status === 500) {
-                    skipDate(prevDate, "backward");
-                }
-            });
-    }
-}
-
-// skip bad dates that produce error 500 Internal Server Error
-function skipDate(date, direction) {
-    if (direction === 'backward') {
-        var prevDate = date.subtract(1, 'd');
-        ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate.format("YYYY-MM-DD");
-        $.ajax(ajaxSettings);
-    } else if (direction === "forward") {
-        var nextDate = date.add(1, 'd');
-        ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate.format("YYYY-MM-DD");
-        $.ajax(ajaxSettings);
-    }
-}
-
-// disable buttons if next or prev date is beyond the current
-// date or before the APOD birthday.
-function checkDateRange() {
-    var nextDate = moment(apodData.date).add(1, 'd');
-    var prevDate = moment(apodData.date).subtract(1, 'd');
-    if (nextDate >= todayDate) {
-        $("#next").prop("disabled", true);
-    }
-    else {
-        $("#next").prop("disabled", false);
-    }
-
-    if (prevDate <= apodStartDate) {
-        $("#prev").prop("disabled", true);
-    }
-    else {
-        $("#prev").prop("disabled", false);
-    }
-}
-
-// updateDOM inserts apodData into the DOM
-function updateDOM(apodData) {
-    $('#spinner').addClass('is-active');
-    checkDateRange();
-    var httpsStr = "https://" + apodData.url.match(/[^http:\/\/].+/);
-    // if there is a HD image available use that as anchor
-    if (apodData.hasOwnProperty('hdurl')) {
-        var httpsStrHD = "https://" + apodData.hdurl.match(/[^http:\/\/].+/);
-    }
-    else {
-        // otherwise use the standard one
-        httpsStrHD = httpsStr;
-    }
-
-    $('#title').html(apodData.title);
-
-    if (apodData.media_type === 'image') {
-        $('#media').html('<a href=' + httpsStrHD + ' target="_blank"><img id="apod-image" src=' + httpsStr + '></a>');
-        $('#apod-image').on('load', function() {
-            $("#spinner").removeClass("is-active");
-        });
-    }
-    else if (apodData.media_type === 'video' && apodData.url.match(/https:\/\//) == "https://") {
-        $('#media').html('<iframe id="ytplayer" type="text/html" width="400" height="400"' +
-            'src = ' + apodData.url + ' frameborder = "0">< / iframe > ');
-        $('#ytplayer').on('load', function() {
-            $("#spinner").removeClass("is-active");
-        });
-    }
-    else {
-        $('#media').addClass('http-media');
-        $('#media').html('<a href=' + apodData.url + ' target="_blank" class="http-link"><p>Click here to open media.</p></a>');
-        $('#support').text("");
-    }
-    // credit author if not public domain
-    if (apodData.hasOwnProperty('copyright')) {
-        $('#support').html("Image credit and copyright: " + apodData.copyright);
-    } 
-    else {
-        $('#support').html(" ");
-    }
-    
-    $('#apod-date').html(moment(apodData.date).format("L"));
-    $('#explanation').html('<p>' + apodData.explanation + '</p>');
-}
+    next(apodDataStore);
+});
 
 function initApp() {
     // Listening for auth state changes.
@@ -173,7 +52,12 @@ function initApp() {
                 keyData = dataSnapshot.val().api_key;
                 ajaxSettings.url += keyData + "&date=" + moment().format("YYYY-MM-DD");
                 // make ajax call to NASA APOD API
-                $.ajax(ajaxSettings);
+                $.ajax(ajaxSettings)
+                    .done(function(data) {
+                        apodDataStore = data;
+                        //console.log(JSON.stringify(apodData));
+                        updateDOM(apodDataStore);
+                    });
                 //console.log(keyData);
                 // [START signout]
                 firebase.auth().signOut();
