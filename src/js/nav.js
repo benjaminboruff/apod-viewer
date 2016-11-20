@@ -65,7 +65,6 @@ function next(apodDataStore: Object): void {
     var nextDate = moment(apodDataStore.date).add(1, 'd').format("YYYY-MM-DD");
     //console.log("Next date is: " + nextDate);
     if (nextOkay(nextDate)) {
-        //if (!$("#next").prop("disabled")) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + nextDate;
         $.ajax(ajaxSettings)
             .done(function(data) {
@@ -77,7 +76,6 @@ function next(apodDataStore: Object): void {
                     skipDate(apodDataStore, "forward");
                 }
             });
-        //}
     }
 }
 
@@ -87,7 +85,6 @@ function prev(apodDataStore: Object): void {
     var prevDate = moment(apodDataStore.date).subtract(1, 'd').format("YYYY-MM-DD");
     //console.log("Prev date is: " + prevDate);
     if (prevOkay(prevDate)) {
-        //if (!$("#prev").prop("disabled")) {
         ajaxSettings.url = ajaxSettings.url.match(/^[https:\/\/\w*.\?api\_key\=]*/) + "&date=" + prevDate;
         $.ajax(ajaxSettings)
             .done(function(data) {
@@ -99,7 +96,6 @@ function prev(apodDataStore: Object): void {
                     skipDate(apodDataStore, "backward");
                 }
             });
-        //}
     }
 }
 

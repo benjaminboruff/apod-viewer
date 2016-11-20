@@ -7,10 +7,9 @@ import { ajaxSettings, firebaseConfig, startDate } from './config.json';
 import { next, prev, checkDateRange } from './nav';
 import { updateDOM } from './dom';
 
+// global data store for the current apod object
+// from apod api call
 var apodDataStore: Object = {};
-//apodDataStore.date = `${startDate}`;
-//var apodStartDate = moment(startDate);
-//var todayDate = moment();
 
 firebase.initializeApp(firebaseConfig);
 
