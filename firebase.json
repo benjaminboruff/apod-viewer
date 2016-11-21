@@ -9,6 +9,7 @@
       "database.rules.json",
       "./.c9/",
       "./src/",
+      "./flow-typed/",
       "**/node_modules/**"
     ]
   }

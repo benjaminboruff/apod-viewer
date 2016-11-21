@@ -122,5 +122,7 @@ function skipDate(apodDataStore: Object, direction: string): void {
 export {
     next,
     prev,
-    checkDateRange
+    checkDateRange,
+    nextOkay,
+    prevOkay
 };

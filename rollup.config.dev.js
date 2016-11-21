@@ -11,8 +11,19 @@ export default {
   plugins: [
     flow(),
     json(),
-    babel(),
-    nodeResolve({browser: true}),
+    babel({
+      "babelrc": false,
+      "exclude": 'node_modules/**',
+      "presets": [
+        ["es2015", {
+          "modules": false
+        }]
+      ],
+      "plugins": ["external-helpers"]
+    }),
+    nodeResolve({
+      browser: true
+    }),
     commonjs()
   ],
   dest: 'src/bundle.js'
