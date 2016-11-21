@@ -16907,9 +16907,9 @@ function checkDateRange(dateStr) {
 // is it okay to go to next apod date?
 function nextOkay(dateStr) {
     var todayDate = moment();
-    var nextMoment = moment(dateStr);
+    var nextMoment = moment(dateStr, "YYYY-MM-DD");
 
-    if (nextMoment <= todayDate) {
+    if (nextMoment.isBetween('1996-06-16', todayDate, 'day', '[]')) {
         return true;
     } else {
         return false;
@@ -16918,10 +16918,10 @@ function nextOkay(dateStr) {
 
 // is it okay to go to prev apod date?
 function prevOkay(dateStr) {
-    var apodStartDate = moment(startDate);
-    var prevMoment = moment(dateStr);
+    var todayDate = moment();
+    var prevMoment = moment(dateStr, "YYYY-MM-DD");
 
-    if (prevMoment >= apodStartDate) {
+    if (prevMoment.isBetween('1996-06-16', todayDate, 'day', '[]')) {
         return true;
     } else {
         return false;
