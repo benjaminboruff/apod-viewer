@@ -3,11 +3,11 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "./",
+    "public": "./build",
     "ignore": [
       "firebase.json",
       "database.rules.json",
-      "./.c9/",
+      "./.*",
       "./src/",
       "./flow-typed/",
       "**/node_modules/**"
