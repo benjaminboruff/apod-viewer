@@ -16872,10 +16872,10 @@ function updateDOM(apodDataStore) {
         jquery$1('#support').text("");
     }
     // credit author if not public domain
-    if (apodDataStore.hasOwnProperty('copyright')) {
-        jquery$1('#support').html("Image credit and copyright: " + apodDataStore.copyright);
-    } else {
+    if (!apodDataStore.hasOwnProperty('copyright') || apodDataStore.copyright === "") {
         jquery$1('#support').html(" ");
+    } else {
+        jquery$1('#support').html("Image credit and copyright: " + apodDataStore.copyright);
     }
 
     jquery$1('#apod-date').html(moment(apodDataStore.date).format("L"));
@@ -16931,6 +16931,9 @@ function prevOkay(dateStr) {
 // success function for ajax call to update apodDataStore
 // with new data and then update dom
 function updateDataStore(data, apodDataStore) {
+    if (apodDataStore.hasOwnProperty('copyright')) {
+        apodDataStore.copyright = "";
+    }
     Object.assign(apodDataStore, data);
     updateDOM(apodDataStore);
 }

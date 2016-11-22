@@ -38,11 +38,11 @@ function updateDOM(apodDataStore: Object): void {
         $('#support').text("");
     }
     // credit author if not public domain
-    if (apodDataStore.hasOwnProperty('copyright')) {
-        $('#support').html("Image credit and copyright: " + apodDataStore.copyright);
+    if (!apodDataStore.hasOwnProperty('copyright') || apodDataStore.copyright === "") {
+        $('#support').html(" ");
     }
     else {
-        $('#support').html(" ");
+        $('#support').html("Image credit and copyright: " + apodDataStore.copyright);
     }
 
     $('#apod-date').html(moment(apodDataStore.date).format("L"));

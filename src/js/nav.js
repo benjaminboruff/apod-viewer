@@ -55,6 +55,9 @@ function prevOkay(dateStr: string): boolean {
 // success function for ajax call to update apodDataStore
 // with new data and then update dom
 function updateDataStore(data: Object , apodDataStore: Object): void {
+    if (apodDataStore.hasOwnProperty('copyright')) {
+        apodDataStore.copyright = "";
+    }
     Object.assign(apodDataStore, data);
     updateDOM(apodDataStore);
 }
