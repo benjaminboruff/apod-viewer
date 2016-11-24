@@ -19,10 +19,12 @@ function updateDOM(apodDataStore: Object): void {
     $('#title').html(apodDataStore.title);
 
     if (apodDataStore.media_type === 'image') {
+        
         $('#media').html('<a href=' + httpsStrHD + ' target="_blank"><img id="apod-image" data-src=' + httpsStr + '></a>');
+        // swap url attributes ...
         $('#apod-image').attr('src', $('#apod-image').attr('data-src'));
+        // ... so image fades in
         $('#apod-image').on('load', function() {
-            $("#spinner").css('display', 'none');
             $('#apod-image').removeAttr('data-src');
         });
     }

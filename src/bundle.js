@@ -16856,10 +16856,12 @@ function updateDOM(apodDataStore) {
     jquery$1('#title').html(apodDataStore.title);
 
     if (apodDataStore.media_type === 'image') {
+
         jquery$1('#media').html('<a href=' + httpsStrHD + ' target="_blank"><img id="apod-image" data-src=' + httpsStr + '></a>');
+        // swap url attributes ...
         jquery$1('#apod-image').attr('src', jquery$1('#apod-image').attr('data-src'));
+        // ... so image fades in
         jquery$1('#apod-image').on('load', function () {
-            jquery$1("#spinner").css('display', 'none');
             jquery$1('#apod-image').removeAttr('data-src');
         });
     } else if (apodDataStore.media_type === 'video' && apodDataStore.url.match(/https:\/\//) == "https://") {
@@ -16933,7 +16935,6 @@ function updateDataStore(data, apodDataStore) {
         apodDataStore.copyright = "";
     }
     Object.assign(apodDataStore, data);
-    //$('#media').html('<div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>');
     updateDOM(apodDataStore);
 }
 

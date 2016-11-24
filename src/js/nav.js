@@ -59,7 +59,6 @@ function updateDataStore(data: Object , apodDataStore: Object): void {
         apodDataStore.copyright = "";
     }
     Object.assign(apodDataStore, data);
-    //$('#media').html('<div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>');
     updateDOM(apodDataStore);
 }
 
