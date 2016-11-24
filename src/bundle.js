@@ -16843,7 +16843,6 @@ var startDate = "1996-06-16";
 //      
 // updateDOM inserts apodDataStore into the DOM
 function updateDOM(apodDataStore) {
-
     checkDateRange(apodDataStore.date);
     var httpsStr = "https://" + apodDataStore.url.match(/[^http:\/\/].+/);
     // if there is a HD image available use that as anchor
@@ -16860,14 +16859,11 @@ function updateDOM(apodDataStore) {
         jquery$1('#media').html('<a href=' + httpsStrHD + ' target="_blank"><img id="apod-image" data-src=' + httpsStr + '></a>');
         jquery$1('#apod-image').attr('src', jquery$1('#apod-image').attr('data-src'));
         jquery$1('#apod-image').on('load', function () {
-            //$("#spinner").removeClass("is-active");
+            jquery$1("#spinner").css('display', 'none');
             jquery$1('#apod-image').removeAttr('data-src');
         });
     } else if (apodDataStore.media_type === 'video' && apodDataStore.url.match(/https:\/\//) == "https://") {
         jquery$1('#media').html('<iframe id="ytplayer" type="text/html" width="400" height="400"' + 'src = ' + apodDataStore.url + ' frameborder = "0">< / iframe > ');
-        jquery$1('#ytplayer').on('load', function () {
-            jquery$1("#spinner").removeClass("is-active");
-        });
     } else {
         jquery$1('#media').addClass('http-media');
         jquery$1('#media').html('<a href=' + apodDataStore.url + ' target="_blank" class="http-link"><p>Click here to open media.</p></a>');
@@ -16937,7 +16933,7 @@ function updateDataStore(data, apodDataStore) {
         apodDataStore.copyright = "";
     }
     Object.assign(apodDataStore, data);
-    jquery$1('#media').html('<div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>');
+    //$('#media').html('<div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>');
     updateDOM(apodDataStore);
 }
 
