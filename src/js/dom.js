@@ -5,7 +5,7 @@ import { prev, next, checkDateRange } from './nav';
 
 // updateDOM inserts apodDataStore into the DOM
 function updateDOM(apodDataStore: Object): void {
-    $('#spinner').addClass('is-active');
+    
     checkDateRange(apodDataStore.date);
     var httpsStr: string = "https://" + apodDataStore.url.match(/[^http:\/\/].+/);
     // if there is a HD image available use that as anchor
@@ -20,9 +20,11 @@ function updateDOM(apodDataStore: Object): void {
     $('#title').html(apodDataStore.title);
 
     if (apodDataStore.media_type === 'image') {
-        $('#media').html('<a href=' + httpsStrHD + ' target="_blank"><img id="apod-image" src=' + httpsStr + '></a>');
+        $('#media').html('<a href=' + httpsStrHD + ' target="_blank"><img id="apod-image" data-src=' + httpsStr + '></a>');
+        $('#apod-image').attr('src', $('#apod-image').attr('data-src'));
         $('#apod-image').on('load', function() {
-            $("#spinner").removeClass("is-active");
+            //$("#spinner").removeClass("is-active");
+            $('#apod-image').removeAttr('data-src');
         });
     }
     else if (apodDataStore.media_type === 'video' && apodDataStore.url.match(/https:\/\//) == "https://") {

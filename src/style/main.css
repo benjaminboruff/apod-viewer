@@ -7,6 +7,15 @@ a {
     text-decoration: none;
 }
 
+img {
+	opacity: 1;
+	transition: opacity 0.3s;
+}
+
+img[data-src] {
+	opacity: 0;
+}
+
 .mdl-card__supporting-text {
     height: 30px;
 }
@@ -53,6 +62,6 @@ a {
 
 .mdl-spinner {
     /*margin-left: 60px;*/
-    width: 370px;
-    height: 370px;
+    width: 332px;
+    height: 332px;
 }
